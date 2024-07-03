@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: demo-spring-mvc-client
+  security:
+    oauth2:
+      client:
+        registration:
+          spring:
+            client-id: 'demo-client-pkce'
+            authorization-grant-type: authorization_code
+            client-authentication-method: none
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
+            user-name-attribute: name
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks  
+          ##/.well-known/jwks.json
+
+server:
+  servlet:
+    context-path: /client
+  port: 9095
+
+logging:
+  level:
+    org.springframework.security: TRACE
